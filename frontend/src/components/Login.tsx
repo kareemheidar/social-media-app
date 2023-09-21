@@ -1,0 +1,119 @@
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Input } from "antd";
+import { isWhiteSpaceLike } from "typescript";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
+const Login: React.FC = () => {
+  const router = useRouter();
+  const [data, setData] = useState("");
+  const [invalid, setInvalid] = useState(false);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setData(data);
+      });
+  }, []);
+
+  const handleLogin = async (values: { email: string; password: string }) => {
+    const { email, password } = values; // Extract email and password from form values
+    console.log("EMAIL: " + email);
+    console.log("PASSWORD: " + password);
+
+    // Make a POST request to the login URL with user credentials
+    try {
+      const response = await fetch("http://localhost:3000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      console.log(response);
+      if (response.ok) {
+        // Handle successful login (e.g., redirect to dashboard)
+        console.log("Login successful");
+        // redirect to home page
+        router.push("/Homepage");
+      } else {
+        // Handle failed login (e.g., display an error message)
+        setInvalid(true);
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
+  return (
+    <div className="loginbody">
+      <div className="flex flex-col justify-center items-center h-[55%] bg-slate-50 bg-opacity-[0.9] rounded-xl shadow-lg w-[350px] m-auto mt-32">
+        <div className="m-16">
+          <nav className="icon">
+            <img src="icon.ico"></img>
+            <h1>{data}</h1>
+          </nav>
+        </div>
+        <Form
+          name="normal_login"
+          className="loginform"
+          initialValues={{ remember: true }}
+          onFinish={handleLogin}
+        >
+          <Form.Item
+            name="email"
+            rules={[{ required: true, message: "Please input your E-mail!" }]}
+          >
+            <Input
+              className="w-72"
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="E-mail"
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: "Please input your Password!" }]}
+          >
+            <Input
+              className="w-72"
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Password"
+            />
+          </Form.Item>
+          {/* <Form.Item className='flex flex-col justify-center'>
+
+                        <a className="login-form-forgot, flex-auto , justify-center" href="">
+                            Forgot password
+                        </a>
+                    </Form.Item> */}
+
+          <Form.Item>
+            <div className="flex flex-row justify-center items-center">
+              {invalid && (
+                <p className="text-red-500">Invalid email or password</p>
+              )}
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="w-44 login-form-button rounded-xl bg-blue-500"
+                onClick={() => {}}
+              >
+                LogIn
+              </Button>
+              <Link className="font mb-16" href="/Signuppage">
+                Or register now!
+              </Link>
+            </div>
+          </Form.Item>
+        </Form>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
