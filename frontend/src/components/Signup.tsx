@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import type { CascaderProps } from "antd";
 import { BrowserRouter } from "react-router-dom";
 import { useRouter } from "next/router";
-import {
-  Button,
-  Form,
-  Input,
-  Select,
-} from "antd";
+import { Button, Form, Input, Select } from "antd";
 import Link from "next/link";
 
 const { Option } = Select;
@@ -44,39 +39,41 @@ const tailFormItemLayout = {
 
 const Signup: React.FC = () => {
   const [form] = Form.useForm();
-  const [userExists, setUserExists] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
- const onFinish = async (values: {
-  email: string;
-  password: string;
-  firstname: string;
-  lastname: string;
- }) => {
-  const { email, password, firstname, lastname } = values; // Extract email and password from form values
+  const onFinish = async (values: {
+    email: string;
+    password: string;
+    firstname: string;
+    lastname: string;
+  }) => {
+    const { email, password, firstname, lastname } = values; // Extract email and password from form values
 
-  // Make a POST request to the login URL with user credentials
-  try {
-    const response = await fetch("http://localhost:3000/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, firstname, lastname }),
-    });
-    console.log(response);
-    if (response.ok) {
-      // Handle successful login (e.g., redirect to dashboard)
-      console.log("Signup successful");
-      // redirect to home page
-      router.push("/Loginpage");
-    } else {
-      // Handle failed login (e.g., display an error message)
-      console.error("Signup failed");
+    // Make a POST request to the login URL with user credentials
+    try {
+      const response = await fetch("http://localhost:3000/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, firstname, lastname }),
+      });
+
+      if (response.ok) {
+        console.log("Signup successful");
+        router.push("/Loginpage");
+        setError(false);
+      } else {
+        console.error("Signup failed");
+        const message = await response.text();
+        const data = JSON.parse(message);
+        setErrorMessage(data.message);
+        setError(true);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
     }
-  } catch (error) {
-    console.error("An error occurred:", error);
-  }
-
-};
+  };
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select style={{ width: 70 }}>
@@ -111,8 +108,9 @@ const Signup: React.FC = () => {
   }));
 
   return (
-    <div className="flex flex-col justify-center items-center h-[50%] bg-slate-50 bg-opacity-[0.9] rounded-xl shadow-lg w-[500px] m-auto mt-32">
-      <div className="m-16">
+    <div className="w-[500px] h-[550px] flex flex-col justify-center items-center bg-slate-50 bg-opacity-[0.9] rounded-xl shadow-lg m-auto mt-32">
+      {" "}
+      <div className="mb-16">
         <nav className="icon">
           <img src="icon.ico"></img>
         </nav>
@@ -122,12 +120,14 @@ const Signup: React.FC = () => {
         form={form}
         name="register"
         onFinish={onFinish}
-        className="max-w-[600px]"
+        className="flex flex-col justify-center items-center"
         scrollToFirstError
       >
+        {/* <div className="flex flex-row justify-center items-center"> */}
         <Form.Item
           name="firstname"
           label="First Name"
+          className=""
           rules={[
             {
               required: true,
@@ -135,11 +135,12 @@ const Signup: React.FC = () => {
             },
           ]}
         >
-          <Input type="text" placeholder="Enter First Name" />
+          <Input type="text" placeholder="First Name" className="w-64" />
         </Form.Item>
         <Form.Item
           name="lastname"
           label="Last Name"
+          className=""
           rules={[
             {
               required: true,
@@ -147,11 +148,13 @@ const Signup: React.FC = () => {
             },
           ]}
         >
-          <Input type="text" placeholder="Enter Last Name" />
+          <Input type="text" placeholder="Last Name" className="w-64" />
         </Form.Item>
+        {/* </div> */}
         <Form.Item
           name="email"
           label="E-mail"
+          className=""
           rules={[
             {
               type: "email",
@@ -163,11 +166,12 @@ const Signup: React.FC = () => {
             },
           ]}
         >
-          <Input placeholder="Enter Email" />
+          <Input placeholder="Enter Email" className="w-64" />
         </Form.Item>
         <Form.Item
           name="password"
           label="Password "
+          className=""
           rules={[
             {
               required: true,
@@ -176,11 +180,13 @@ const Signup: React.FC = () => {
           ]}
           hasFeedback
         >
-          <Input.Password placeholder="Enter Password" />
+          <Input.Password placeholder="Enter Password" className="w-64" />
         </Form.Item>
+
         <Form.Item
           name="confirm"
           label="Confirm Password"
+          className=""
           dependencies={["password"]}
           hasFeedback
           rules={[
@@ -200,11 +206,11 @@ const Signup: React.FC = () => {
             }),
           ]}
           // style={{ marginLeft: "-50px" }}
-          className="-ml-14"
         >
-          <Input.Password placeholder="Re-Enter Password" />
+          <Input.Password placeholder="Re-Enter Password" className="w-64" />
         </Form.Item>
-        <Form.Item
+
+        {/* <Form.Item
           name="phone"
           label="Phone Number"
           rules={[
@@ -213,8 +219,8 @@ const Signup: React.FC = () => {
         >
           <Input
             addonBefore={prefixSelector}
-            style={{ width: "100%" }}
             placeholder="Enter Phone Number"
+            className="w-64"
           />
         </Form.Item>
         <Form.Item
@@ -222,15 +228,21 @@ const Signup: React.FC = () => {
           label="Gender"
           rules={[{ required: true, message: "Please select gender!" }]}
         >
-          <Select placeholder="Select Your Gender">
+          <Select placeholder="Select Your Gender" className="w-64">
             <Option value="male">Male</Option>
             <Option value="female">Female</Option>
           </Select>
-        </Form.Item>
-        <Form.Item className="flex justify-center" {...tailFormItemLayout}>
-            <Button className="bg-blue-500" type="primary" htmlType="submit">
-              Register
-            </Button>
+        </Form.Item> */}
+        <div className="flex flex-row justify-center items-center mb-2">
+          {error && <p className="text-red-500">{errorMessage}</p>}
+        </div>
+        <Form.Item
+          className="flex justify-center -ml-10"
+          {...tailFormItemLayout}
+        >
+          <Button className="bg-blue-500" type="primary" htmlType="submit">
+            Register
+          </Button>
         </Form.Item>
       </Form>
     </div>

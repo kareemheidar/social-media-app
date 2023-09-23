@@ -37,6 +37,7 @@ const Login: React.FC = () => {
         console.log("Login successful");
         // redirect to home page
         router.push("/Homepage");
+        setInvalid(false);
       } else {
         // Handle failed login (e.g., display an error message)
         setInvalid(true);
@@ -49,11 +50,11 @@ const Login: React.FC = () => {
 
   return (
     <div className="loginbody">
-      <div className="flex flex-col justify-center items-center h-[55%] bg-slate-50 bg-opacity-[0.9] rounded-xl shadow-lg w-[350px] m-auto mt-32">
-        <div className="m-16">
+      <div className="w-[350px] h-[500px] flex flex-col justify-center items-center bg-slate-50 bg-opacity-[0.9] rounded-xl shadow-lg m-auto mt-32">
+        {" "}
+        <div className="mb-16">
           <nav className="icon">
             <img src="icon.ico"></img>
-            <h1>{data}</h1>
           </nav>
         </div>
         <Form
@@ -83,6 +84,9 @@ const Login: React.FC = () => {
               placeholder="Password"
             />
           </Form.Item>
+          <Form.Item className="forgetpass ">
+            <Link href={"/forgetpasspage"}>Forgot password?</Link>
+          </Form.Item>
           {/* <Form.Item className='flex flex-col justify-center'>
 
                         <a className="login-form-forgot, flex-auto , justify-center" href="">
@@ -90,12 +94,12 @@ const Login: React.FC = () => {
                         </a>
                     </Form.Item> */}
 
-          <Form.Item>
-            <div className="flex flex-row justify-center items-center">
+            <div className="flex flex-row justify-center items-center mb-2">
               {invalid && (
                 <p className="text-red-500">Invalid email or password</p>
               )}
             </div>
+          <Form.Item>
             <div className="flex flex-col justify-center items-center">
               <Button
                 type="primary"

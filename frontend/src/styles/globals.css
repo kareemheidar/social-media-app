@@ -12,8 +12,8 @@
 }
 
 .loginbody {
-  margin-top: 200px;
-  height: 100vh;
+  /* margin-top: 200px; */
+  /* height: 100vh; */
 
   /* background-size: cover; */
   /* /* background-size: 100%;,  */
@@ -45,6 +45,20 @@ html {
   align-items: flex-start;
 }
 
+.Homepage {
+  width: 100vw;
+  height: 100vh;
+}
+
+.forgetpass {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -30px;
+  margin-right: 165px;
+  text-decoration: underline;
+  color: lightslategrey;
+  /* font-size: 50px; */
+}
 /* .body {
   width: 100vw;
   height: 100vh;
@@ -56,4 +70,15 @@ html {
 
 .form {
   margin-top: 200px;
+}
+
+.ant-form-item {
+  text-align: left;
+}
+
+.ant-form-item-required {
+  display: flex;
+  justify-content: flex-start;
+  text-align: left;
+  width: 160px;
 }
