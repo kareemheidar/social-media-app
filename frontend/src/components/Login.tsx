@@ -33,9 +33,10 @@ const Login: React.FC = () => {
       });
       console.log(response);
       if (response.ok) {
-        // Handle successful login (e.g., redirect to dashboard)
         console.log("Login successful");
-        // redirect to home page
+        // get the token from the response
+        const token = await response.text();
+        console.log("TOKEN: " + token);
         router.push("/Homepage");
         setInvalid(false);
       } else {
