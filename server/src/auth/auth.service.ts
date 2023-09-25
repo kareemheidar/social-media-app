@@ -99,7 +99,7 @@ export class AuthService {
       from: 'kareemheidar@outlook.com',
       to: email,
       subject: 'Reset Password',
-      text: `Click the following link to reset your password: http://localhost:3001/auth/resetpassword/${resetToken}`,
+      text: `Click the following link to reset your password: http://localhost:3001/ResetPassword/${resetToken}`,
     };
 
     await transporter.sendMail(mailOptions);
@@ -108,11 +108,24 @@ export class AuthService {
   async resetPassword(token: string, resetPasswordDto: ResetPasswordDto) {
     const { password } = resetPasswordDto;
 
-    const decodedToken = verify(token, process.env.JWT_SECRET) as { email: string };
+    // check if token is expired 
+    let decodedToken = null;
+    try {
+      decodedToken = verify(token, process.env.JWT_SECRET) as { email: string };
+    } catch (error) {
+      throw new UnauthorizedException('Expired token');
+    }
+    if(!decodedToken) {
+      throw new UnauthorizedException('Invalid token');
+    }
 
     const user = await this.userModel.findOne({ email: decodedToken.email });
     if(!user) {
       throw new NotFoundException('User not found');
+    }
+
+    if(user.resetToken !== token) {
+      throw new UnauthorizedException('Invalid token');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
