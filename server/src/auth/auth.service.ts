@@ -99,7 +99,7 @@ export class AuthService {
       from: 'kareemheidar@outlook.com',
       to: email,
       subject: 'Reset Password',
-      text: `Click the following link to reset your password: http://localhost:3001/auth/resetpassword/${resetToken}`,
+      text: `Click the following link to reset your password: http://localhost:3001/ResetPassword/${resetToken}`,
     };
 
     await transporter.sendMail(mailOptions);
