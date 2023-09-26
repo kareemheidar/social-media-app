@@ -8,7 +8,7 @@ import {
   HomeOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, Button, theme } from "antd";
+import { Layout, Menu, Button, theme, Modal } from "antd";
 import Post from "@/components/Post";
 
 const { Header, Sider, Content } = Layout;
@@ -36,6 +36,20 @@ interface Posts {
 }
 
 const Homepage: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   const [collapsed, setCollapsed] = useState(false);
   const [active, setActive] = useState("1");
   const {
@@ -134,9 +148,30 @@ const Homepage: React.FC = () => {
               margin: "24px 16px",
             }}
           >
-            <div className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center">
+            <Button
+              className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center"
+              onClick={showModal}
+            >
               <span className="text-white text-6xl text-center mb-3">+</span>
-            </div>
+            </Button>
+            <Modal
+              title="Basic Modal"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              // className="modal"
+              okButtonProps={{
+                style: {
+                  color: "white",
+                  border: "1px solid lightgray ",
+                  background: "rgb(147 51 234)",
+                },
+              }}
+            >
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+            </Modal>
           </div>
         </Content>
 
@@ -156,9 +191,9 @@ const Homepage: React.FC = () => {
               margin: "24px 16px",
             }}
           >
-            <div className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center">
+            <Button className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center">
               <span className="text-white text-6xl text-center mb-3">+</span>
-            </div>
+            </Button>
           </div>
         </Content>
 
@@ -178,9 +213,9 @@ const Homepage: React.FC = () => {
               margin: "24px 16px",
             }}
           >
-            <div className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center">
+            <Button className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center">
               <span className="text-white text-6xl text-center mb-3">+</span>
-            </div>
+            </Button>
           </div>
         </Content>
       </Layout>

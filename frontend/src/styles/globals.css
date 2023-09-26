@@ -82,3 +82,9 @@ html {
   text-align: left;
   width: 160px;
 }
+.modal {
+  display: flex;
+  width: 150vw;
+  height: 70vh;
+  margin-left: 0px;
+}
