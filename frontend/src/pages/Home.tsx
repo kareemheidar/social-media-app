@@ -10,10 +10,11 @@ import {
   HomeOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, Button, theme, Modal } from "antd";
+import { Layout, Menu, Button, theme, Modal, Form, Input } from "antd";
 import Post from "@/components/Post";
 
 const { Header, Sider, Content } = Layout;
+const { TextArea } = Input;
 
 interface Payload {
   token: string;
@@ -160,11 +161,11 @@ const Homepage: React.FC = () => {
             </Button>
 
             <Modal
-              title="Basic Modal"
+              title="List your posts!"
               open={isModalOpen}
               onOk={handleOk}
               onCancel={handleCancel}
-              // className="modal"
+              okText="Post"
               okButtonProps={{
                 style: {
                   color: "white",
@@ -173,9 +174,14 @@ const Homepage: React.FC = () => {
                 },
               }}
             >
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
+              <Input className="title" size="small" placeholder="Title" />
+
+              <TextArea
+                className="list"
+                rows={4}
+                style={{ height: 120, resize: "none" }}
+                placeholder="Type something..."
+              />
             </Modal>
           </div>
         </Content>
@@ -195,9 +201,34 @@ const Homepage: React.FC = () => {
               margin: "24px 16px",
             }}
           >
+
             <Button className="float bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center" onClick={showModal}>
               <span className="text-white text-lg "> <PlusOutlined /></span>
+
             </Button>
+            <Modal
+              title="List your posts!"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              okText="Post"
+              okButtonProps={{
+                style: {
+                  color: "white",
+                  border: "1px solid lightgray ",
+                  background: "rgb(147 51 234)",
+                },
+              }}
+            >
+              <Input className="title" size="small" placeholder="Title" />
+
+              <TextArea
+                className="list"
+                rows={4}
+                style={{ height: 120, resize: "none" }}
+                placeholder="Type something..."
+              />
+            </Modal>
           </div>
         </Content>
 
@@ -216,9 +247,35 @@ const Homepage: React.FC = () => {
               margin: "24px 16px",
             }}
           >
+
             <Button className="float bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center" onClick={showModal}>
               <span className="text-white text-lg "> <PlusOutlined /></span>
             </Button>
+
+
+            <Modal
+              title="List your posts!"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              okText="Post"
+              okButtonProps={{
+                style: {
+                  color: "white",
+                  border: "1px solid lightgray ",
+                  background: "rgb(147 51 234)",
+                },
+              }}
+            >
+              <Input className="title" size="small" placeholder="Title" />
+
+              <TextArea
+                className="list"
+                rows={4}
+                style={{ height: 120, resize: "none" }}
+                placeholder="Type something..."
+              />
+            </Modal>
 
           </div>
         </Content>

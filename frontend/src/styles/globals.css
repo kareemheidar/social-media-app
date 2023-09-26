@@ -90,9 +90,20 @@ html {
   width: 160px;
 }
 
+
 .modal {
   display: flex;
   width: 150vw;
   height: 70vh;
   margin-left: 0px;
 }
+
+.title {
+  display: flex;
+  margin-top: 10px;
+}
+.list {
+  display: flex;
+  margin-top: 20px;
+}
+
