@@ -7,6 +7,7 @@ import { Query } from 'express-serve-static-core';
 import { User } from 'src/auth/schemas/user.schema';
 import { Bookmark } from './schema/bookmark.schema';
 import { List } from 'src/list/schema/list.schema';
+import { ListService } from 'src/list/list.service';
 
 
 @Injectable()
@@ -14,6 +15,7 @@ export class BookmarksService {
   constructor(
     @InjectModel(Bookmark.name)
     private bookmarkModel: mongoose.Model<Bookmark>,
+    private listService: ListService,
 
     
     
@@ -23,11 +25,15 @@ export class BookmarksService {
     const bookmark = new this.bookmarkModel(createBookmarkDto);
     // the attribute 'list' is a the list id, use it to find the list
     // update the list's bookmark count
-    // const list = createBookmarkDto.list;
-    // console.log(list);
-    // list.bookmarks += 1;
-    // await list.save();
-    return bookmark.save();
+    const list = createBookmarkDto.list;
+    console.log(list);
+    // convert list to a string
+    const listId = list.toString();
+    console.log(listId);
+    const updatedList = await this.listService.incrementBookmarkCount(listId);
+    console.log(updatedList);
+    await bookmark.save();
+    return bookmark;
   }
 
   async findAllForUser(id: string): Promise<Bookmark[]> {

@@ -57,6 +57,14 @@ export class ListController {
     return this.listService.updateById(id, list);
   }
 
+  @Put(':id/increment')
+  async incrementBookmarkCount(
+    @Param('id')
+    id: string,
+  ): Promise<List> {
+    return this.listService.incrementBookmarkCount(id);
+  }
+
   @Delete(':id')
   @UseGuards(AuthGuard())
   async deleteList(

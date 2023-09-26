@@ -12,5 +12,6 @@ import { ListSchema } from './schema/list.schema';
   ],
   controllers: [ListController],
   providers: [ListService],
+  exports: [ListService]
 })
 export class ListModule {}

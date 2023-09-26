@@ -41,6 +41,19 @@ export class ListService {
     return list;
   }
 
+  async incrementBookmarkCount(id: string): Promise<List> {
+    const list = await this.listModel.findById(id);
+
+    if (!list) {
+      throw new NotFoundException('List not found.');
+    }
+    if(list.bookmarks === undefined) {
+      list.bookmarks = 0;
+    }
+    list.bookmarks += 1;
+    return await list.save();
+  }
+
   async updateById(id: string, list: List): Promise<List> {
     return await this.listModel.findByIdAndUpdate(id, list, {
       new: true,

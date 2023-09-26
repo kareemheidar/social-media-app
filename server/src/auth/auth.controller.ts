@@ -33,4 +33,10 @@ export class AuthController {
     @Body() resetPasswordDto: ResetPasswordDto) {
     await this.authService.resetPassword(token, resetPasswordDto);
   }
+
+  // get user by id
+  @Get('/:id')
+  async getUser(@Param('id') id: string): Promise<{id: string, firstname: string, lastname: string, email: string}> {
+    return await this.authService.getUser(id);
+  }
 }

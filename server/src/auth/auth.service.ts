@@ -143,4 +143,22 @@ export class AuthService {
 
   }
 
+  async getUser(id: string): Promise<{id: string, firstname: string, lastname: string, email: string}> {
+
+    const user = await this.userModel.findById(id);
+
+    const userData = {
+      id: user._id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+    };
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return userData;
+  }
+
 }

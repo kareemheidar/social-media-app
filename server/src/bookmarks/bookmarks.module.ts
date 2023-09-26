@@ -14,9 +14,10 @@ import { ListController } from 'src/list/list.controller';
       { name: Bookmark.name, schema: BookmarkSchema },
     ]),
     AuthModule,
-    ListModule,
+    ListModule
   ],
-  controllers: [BookmarksController, ListController],
-  providers: [BookmarksService, ListService],
+
+  controllers: [BookmarksController],
+  providers: [BookmarksService],
 })
 export class BookmarksModule {}
