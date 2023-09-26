@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { PlusOutlined } from '@ant-design/icons';
+
 
 import {
   MenuFoldOutlined,
@@ -134,9 +136,8 @@ const Homepage: React.FC = () => {
 
         <Content
           id="1"
-          className={`px-24 overflow-y-auto h-["calc(100vh-64px)"] ${
-            active === "1" ? "block" : "hidden"
-          }`}
+          className={`px-24 overflow-y-auto h-["calc(100vh-64px)"] ${active === "1" ? "block" : "hidden"
+            }`}
         >
           <Post />
           <div
@@ -149,12 +150,16 @@ const Homepage: React.FC = () => {
               margin: "24px 16px",
             }}
           >
-            <Button
+            {/* <Button icon={<PlusOutlined />}
               className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center"
               onClick={showModal}
-            >
-              <span className="text-white text-6xl text-center mb-3">+</span>
+            > */}
+            {/* <span   className="text-white text-6xl text-center mb-3">+</span> */}
+            {/* </Button> */}
+            <Button className="float bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center" onClick={showModal}>
+              <span className="text-white text-lg "> <PlusOutlined /></span>
             </Button>
+
             <Modal
               title="List your posts!"
               open={isModalOpen}
@@ -183,9 +188,8 @@ const Homepage: React.FC = () => {
 
         <Content
           id="2"
-          className={`p-24 overflow-y-auto h-["calc(100vh-64px)"] ${
-            active === "2" ? "block" : "hidden"
-          }`}
+          className={`p-24 overflow-y-auto h-["calc(100vh-64px)"] ${active === "2" ? "block" : "hidden"
+            }`}
         >
           <div
             style={{
@@ -197,11 +201,10 @@ const Homepage: React.FC = () => {
               margin: "24px 16px",
             }}
           >
-            <Button
-              className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center"
-              onClick={showModal}
-            >
-              <span className="text-white text-6xl text-center mb-3">+</span>
+
+            <Button className="float bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center" onClick={showModal}>
+              <span className="text-white text-lg "> <PlusOutlined /></span>
+
             </Button>
             <Modal
               title="List your posts!"
@@ -231,9 +234,8 @@ const Homepage: React.FC = () => {
 
         <Content
           id="3"
-          className={`p-24 overflow-y-auto h-["calc(100vh-64px)"] ${
-            active === "3" ? "block" : "hidden"
-          }`}
+          className={`p-24 overflow-y-auto h-["calc(100vh-64px)"] ${active === "3" ? "block" : "hidden"
+            }`}
         >
           <div
             style={{
@@ -245,12 +247,12 @@ const Homepage: React.FC = () => {
               margin: "24px 16px",
             }}
           >
-            <Button
-              className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center"
-              onClick={showModal}
-            >
-              <span className="text-white text-6xl text-center mb-3">+</span>
+
+            <Button className="float bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center" onClick={showModal}>
+              <span className="text-white text-lg "> <PlusOutlined /></span>
             </Button>
+
+
             <Modal
               title="List your posts!"
               open={isModalOpen}
@@ -274,10 +276,11 @@ const Homepage: React.FC = () => {
                 placeholder="Type something..."
               />
             </Modal>
+
           </div>
         </Content>
       </Layout>
-    </Layout>
+    </Layout >
   );
 };
 
