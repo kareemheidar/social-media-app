@@ -22,13 +22,13 @@ const Userpage: React.FC = () => {
 
 
     return (
-        <Layout>
+        <Layout className="h-[100vh]">
             <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="demo-logo-vertical" />
                 <Menu
                     theme="dark"
                     mode="inline"
-                    defaultSelectedKeys={['1']}
+                    defaultSelectedKeys={['2']}
                     items={[
                         {
                             key: '1',

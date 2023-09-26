@@ -26,6 +26,12 @@ export class UpdateListDto {
   @IsString()
   readonly visibility: 'public' | 'private';
 
+  @IsOptional()
+  bookmarks: number;
+
+  @IsOptional()
+  likes: number;
+
   @IsEmpty({ message: ' You cannot pass user id ' })
   readonly user: User;
 }

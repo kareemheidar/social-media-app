@@ -19,7 +19,7 @@ const Homepage: React.FC = () => {
   } = theme.useToken();
 
   return (
-    <Layout>
+    <Layout className="h-[100vh]">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
         <Menu

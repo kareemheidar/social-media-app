@@ -37,6 +37,12 @@ export class List {
   @Prop()
   visibility: 'public' | 'private';
 
+  @Prop()
+  bookmarks: number;
+
+  @Prop()
+  likes: number;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
 }

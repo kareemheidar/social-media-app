@@ -44,7 +44,7 @@ export class AuthService {
     return user;
   }
 
-  async login(loginDto: LogInDto): Promise<{ token: string }> {
+  async login(loginDto: LogInDto): Promise<{ token: string; email: string; firstname: string; lastname: string; id: string }> {
     const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });
 
@@ -64,7 +64,14 @@ export class AuthService {
       firstname: user.firstname,
       lastname: user.lastname,
     });
-    return { token };
+    const payload = {
+      token,
+      id: user._id,
+      email: user.email,
+      firstname: user.firstname,
+      lastname: user.lastname,
+    };
+    return payload;
   }
 
   async forgetPassword(email: string) {
@@ -108,11 +115,24 @@ export class AuthService {
   async resetPassword(token: string, resetPasswordDto: ResetPasswordDto) {
     const { password } = resetPasswordDto;
 
-    const decodedToken = verify(token, process.env.JWT_SECRET) as { email: string };
+    // check if token is expired 
+    let decodedToken = null;
+    try {
+      decodedToken = verify(token, process.env.JWT_SECRET) as { email: string };
+    } catch (error) {
+      throw new UnauthorizedException('Expired token');
+    }
+    if(!decodedToken) {
+      throw new UnauthorizedException('Invalid token');
+    }
 
     const user = await this.userModel.findOne({ email: decodedToken.email });
     if(!user) {
       throw new NotFoundException('User not found');
+    }
+
+    if(user.resetToken !== token) {
+      throw new UnauthorizedException('Invalid token');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

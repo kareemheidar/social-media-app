@@ -5,6 +5,8 @@ import { LogInDto } from './dto/login.dto';
 import { User } from './schemas/user.schema';
 import { ForgetPasswordDto } from './dto/forgetPassword.dto';
 import { ResetPasswordDto } from './dto/resetpassword.dto';
+import { AuthGuard } from '@nestjs/passport';
+
 
 @Controller('auth')
 export class AuthController {
@@ -16,7 +18,7 @@ export class AuthController {
   }
 
   @Post('/login')
-  login(@Body() loginDto: LogInDto): Promise<{ token: string }> {
+  login(@Body() loginDto: LogInDto): Promise<{ token: string; email: string; firstname: string; lastname: string; id: string }> {
     return this.authService.login(loginDto);
   }
 
