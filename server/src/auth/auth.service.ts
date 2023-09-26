@@ -44,7 +44,7 @@ export class AuthService {
     return user;
   }
 
-  async login(loginDto: LogInDto): Promise<{ token: string }> {
+  async login(loginDto: LogInDto): Promise<{ token: string; email: string; firstname: string; lastname: string; id: string }> {
     const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });
 
@@ -64,7 +64,14 @@ export class AuthService {
       firstname: user.firstname,
       lastname: user.lastname,
     });
-    return { token };
+    const payload = {
+      token,
+      id: user._id,
+      email: user.email,
+      firstname: user.firstname,
+      lastname: user.lastname,
+    };
+    return payload;
   }
 
   async forgetPassword(email: string) {

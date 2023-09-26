@@ -5,24 +5,34 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
+// define the payload interface
+interface Payload {
+  token: string;
+  id: string;
+  email: string;
+  firstname: string;
+  lastname: string;
+}
+
 const Login: React.FC = () => {
   const router = useRouter();
   const [data, setData] = useState("");
   const [invalid, setInvalid] = useState(false);
+  // create state for the token to store it in local storage
+  const [payload, setPayload] = useState({} as Payload);
 
-  useEffect(() => {
-    fetch("http://localhost:3000/")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setData(data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       setData(data);
+  //     });
+  // }, []);
 
   const handleLogin = async (values: { email: string; password: string }) => {
     const { email, password } = values; // Extract email and password from form values
-    console.log("EMAIL: " + email);
-    console.log("PASSWORD: " + password);
+
 
     // Make a POST request to the login URL with user credentials
     try {
@@ -34,10 +44,12 @@ const Login: React.FC = () => {
       console.log(response);
       if (response.ok) {
         console.log("Login successful");
-        // get the token from the response
-        const token = await response.text();
-        console.log("TOKEN: " + token);
-        router.push("/Homepage");
+        let res = await response.text();
+        console.log("PAYLOAD: " + res);
+        setPayload(JSON.parse(res));
+        // save payload in local storage
+        localStorage.setItem("payload", res);
+        router.push("/Home");
         setInvalid(false);
       } else {
         // Handle failed login (e.g., display an error message)

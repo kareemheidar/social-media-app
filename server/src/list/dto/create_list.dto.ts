@@ -1,6 +1,6 @@
 import { Category, ListItem } from '../schema/list.schema';
 import { User } from 'src/auth/schemas/user.schema';
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString, IsOptional } from 'class-validator';
 
 export class CreateListDto {
   @IsNotEmpty()
@@ -25,6 +25,12 @@ export class CreateListDto {
   @IsNotEmpty()
   @IsString()
   readonly visibility: 'public' | 'private';
+
+  @IsOptional()
+  bookmarks: number;
+
+  @IsOptional()
+  likes: number;
 
   @IsNotEmpty()
   readonly user: User;
