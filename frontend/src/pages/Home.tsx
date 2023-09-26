@@ -29,6 +29,8 @@ interface Post {
   userId: string;
   likes: number;
   bookmarks: number;
+  firstName: string;
+  lastName: string;
 }
 
 interface Posts {
@@ -42,6 +44,9 @@ const Homepage: React.FC = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const [payload, setPayload] = useState({} as Payload);
+  const [allPosts, setAllPosts] = useState([] as Posts["posts"]);
+  const [myPosts, setMyPosts] = useState([] as Posts["posts"]);
+  const [savedPosts, setSavedPosts] = useState([] as Posts["posts"]);
 
   useEffect(() => {
     const payload = localStorage.getItem("payload");
@@ -49,6 +54,25 @@ const Homepage: React.FC = () => {
       setPayload(JSON.parse(payload));
     }
   }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/list", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${payload.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setAllPosts(data);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+
+  
 
   return (
     <Layout className="h-screen">
@@ -123,7 +147,21 @@ const Homepage: React.FC = () => {
             active === "1" ? "block" : "hidden"
           }`}
         >
-          <Post />
+          {allPosts.map((post) => (
+            <Post
+              key={post.id}
+              title={post.title}
+              description={post.description}
+              createdAt={post.createdAt}
+              likes={post.likes}
+              bookmarks={post.bookmarks}
+              userId={post.userId}
+              id={post.id}
+              firstName={post.firstName}
+              lastName={post.lastName}
+              userImg="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2"
+            />
+          ))}
           <div
             style={{
               position: "sticky",
