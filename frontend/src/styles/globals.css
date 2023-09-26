@@ -11,6 +11,12 @@
   height: 100vh;
 }
 
+.float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
 .loginbody {
   /* margin-top: 200px; */
   /* height: 100vh; */
@@ -59,6 +65,7 @@ html {
   color: lightslategrey;
   /* font-size: 50px; */
 }
+
 /* .body {
   width: 100vw;
   height: 100vh;
@@ -82,3 +89,21 @@ html {
   text-align: left;
   width: 160px;
 }
+
+
+.modal {
+  display: flex;
+  width: 150vw;
+  height: 70vh;
+  margin-left: 0px;
+}
+
+.title {
+  display: flex;
+  margin-top: 10px;
+}
+.list {
+  display: flex;
+  margin-top: 20px;
+}
+

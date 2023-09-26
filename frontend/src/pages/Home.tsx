@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { PlusOutlined } from '@ant-design/icons';
+
 
 import {
   MenuFoldOutlined,
@@ -8,10 +10,11 @@ import {
   HomeOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, Button, theme } from "antd";
+import { Layout, Menu, Button, theme, Modal, Form, Input } from "antd";
 import Post from "@/components/Post";
 
 const { Header, Sider, Content } = Layout;
+const { TextArea } = Input;
 
 interface Payload {
   token: string;
@@ -38,6 +41,20 @@ interface Posts {
 }
 
 const Homepage: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   const [collapsed, setCollapsed] = useState(false);
   const [active, setActive] = useState("1");
   const {
@@ -143,9 +160,8 @@ const Homepage: React.FC = () => {
 
         <Content
           id="1"
-          className={`px-24 overflow-y-auto h-["calc(100vh-64px)"] ${
-            active === "1" ? "block" : "hidden"
-          }`}
+          className={`px-24 overflow-y-auto h-["calc(100vh-64px)"] ${active === "1" ? "block" : "hidden"
+            }`}
         >
           {allPosts.map((post) => (
             <Post
@@ -172,17 +188,46 @@ const Homepage: React.FC = () => {
               margin: "24px 16px",
             }}
           >
-            <div className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center">
-              <span className="text-white text-6xl text-center mb-3">+</span>
-            </div>
+            {/* <Button icon={<PlusOutlined />}
+              className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center"
+              onClick={showModal}
+            > */}
+            {/* <span   className="text-white text-6xl text-center mb-3">+</span> */}
+            {/* </Button> */}
+            <Button className="float bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center" onClick={showModal}>
+              <span className="text-white text-lg "> <PlusOutlined /></span>
+            </Button>
+
+            <Modal
+              title="List your posts!"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              okText="Post"
+              okButtonProps={{
+                style: {
+                  color: "white",
+                  border: "1px solid lightgray ",
+                  background: "rgb(147 51 234)",
+                },
+              }}
+            >
+              <Input className="title" size="small" placeholder="Title" />
+
+              <TextArea
+                className="list"
+                rows={4}
+                style={{ height: 120, resize: "none" }}
+                placeholder="Type something..."
+              />
+            </Modal>
           </div>
         </Content>
 
         <Content
           id="2"
-          className={`p-24 overflow-y-auto h-["calc(100vh-64px)"] ${
-            active === "2" ? "block" : "hidden"
-          }`}
+          className={`p-24 overflow-y-auto h-["calc(100vh-64px)"] ${active === "2" ? "block" : "hidden"
+            }`}
         >
           <div
             style={{
@@ -194,17 +239,41 @@ const Homepage: React.FC = () => {
               margin: "24px 16px",
             }}
           >
-            <div className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center">
-              <span className="text-white text-6xl text-center mb-3">+</span>
-            </div>
+
+            <Button className="float bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center" onClick={showModal}>
+              <span className="text-white text-lg "> <PlusOutlined /></span>
+
+            </Button>
+            <Modal
+              title="List your posts!"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              okText="Post"
+              okButtonProps={{
+                style: {
+                  color: "white",
+                  border: "1px solid lightgray ",
+                  background: "rgb(147 51 234)",
+                },
+              }}
+            >
+              <Input className="title" size="small" placeholder="Title" />
+
+              <TextArea
+                className="list"
+                rows={4}
+                style={{ height: 120, resize: "none" }}
+                placeholder="Type something..."
+              />
+            </Modal>
           </div>
         </Content>
 
         <Content
           id="3"
-          className={`p-24 overflow-y-auto h-["calc(100vh-64px)"] ${
-            active === "3" ? "block" : "hidden"
-          }`}
+          className={`p-24 overflow-y-auto h-["calc(100vh-64px)"] ${active === "3" ? "block" : "hidden"
+            }`}
         >
           <div
             style={{
@@ -216,13 +285,40 @@ const Homepage: React.FC = () => {
               margin: "24px 16px",
             }}
           >
-            <div className="bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center">
-              <span className="text-white text-6xl text-center mb-3">+</span>
-            </div>
+
+            <Button className="float bg-purple-600 h-14 w-14 rounded-full flex justify-center items-center" onClick={showModal}>
+              <span className="text-white text-lg "> <PlusOutlined /></span>
+            </Button>
+
+
+            <Modal
+              title="List your posts!"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              okText="Post"
+              okButtonProps={{
+                style: {
+                  color: "white",
+                  border: "1px solid lightgray ",
+                  background: "rgb(147 51 234)",
+                },
+              }}
+            >
+              <Input className="title" size="small" placeholder="Title" />
+
+              <TextArea
+                className="list"
+                rows={4}
+                style={{ height: 120, resize: "none" }}
+                placeholder="Type something..."
+              />
+            </Modal>
+
           </div>
         </Content>
       </Layout>
-    </Layout>
+    </Layout >
   );
 };
 
