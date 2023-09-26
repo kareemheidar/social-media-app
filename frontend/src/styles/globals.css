@@ -82,9 +82,11 @@ html {
   text-align: left;
   width: 160px;
 }
-.modal {
+.title {
   display: flex;
-  width: 150vw;
-  height: 70vh;
-  margin-left: 0px;
+  margin-top: 10px;
+}
+.list {
+  display: flex;
+  margin-top: 20px;
 }
