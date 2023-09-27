@@ -27,6 +27,16 @@ export class ListController {
     return lists;
   }
 
+  @Get('user/:id')
+  @UseGuards(AuthGuard())
+  async getAllListsForUser(
+    @Param('id')
+    id: string,
+  ): Promise<List[]> {
+    const lists = await this.listService.getAllListsForUser(id);
+    return lists;
+  }
+
   @Post()
   @UseGuards(AuthGuard())
   async createList(

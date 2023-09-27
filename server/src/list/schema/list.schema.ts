@@ -45,6 +45,18 @@ export class List {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
+
+  @Prop()
+  firstName: string;
+
+  @Prop()
+  lastName: string;
+
+  @Prop()
+  isBookmarked: boolean;
+
+  @Prop()
+  isLiked: boolean;
 }
 
 export const ListSchema = SchemaFactory.createForClass(List);

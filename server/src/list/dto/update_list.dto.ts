@@ -34,4 +34,18 @@ export class UpdateListDto {
 
   @IsEmpty({ message: ' You cannot pass user id ' })
   readonly user: User;
+
+  @IsOptional()
+  @IsString()
+  firstName: string;
+
+  @IsOptional()
+  @IsString()
+  lastName: string;
+
+  @IsOptional()
+  isBookmarked: boolean;
+
+  @IsOptional()
+  isLiked: boolean;
 }

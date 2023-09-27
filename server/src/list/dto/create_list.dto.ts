@@ -34,4 +34,16 @@ export class CreateListDto {
 
   @IsNotEmpty()
   readonly user: User;
+
+  @IsOptional()
+  firstName: string;
+
+  @IsOptional()
+  lastName: string;
+
+  @IsOptional()
+  isBookmarked: boolean;
+
+  @IsOptional()
+  isLiked: boolean;
 }

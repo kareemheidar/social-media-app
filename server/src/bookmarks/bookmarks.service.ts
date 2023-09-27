@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -15,6 +15,7 @@ export class BookmarksService {
   constructor(
     @InjectModel(Bookmark.name)
     private bookmarkModel: mongoose.Model<Bookmark>,
+    @Inject(forwardRef(() => ListService))
     private listService: ListService,
 
     
