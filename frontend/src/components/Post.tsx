@@ -7,7 +7,7 @@ import {
   BookOutlined,
 } from "@ant-design/icons";
 import { Avatar, Card, Skeleton, Switch } from "antd";
-import React, { useEffect } from "react";
+import React, { use, useEffect } from "react";
 import { useState } from "react";
 
 type Props = {

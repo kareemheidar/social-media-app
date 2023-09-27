@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { PlusOutlined } from '@ant-design/icons';
 
 
@@ -27,13 +27,15 @@ interface Payload {
 interface Post {
   title: string;
   description: string;
-  id: string;
+  _id: string;
   createdAt: string;
   userId: string;
   likes: number;
   bookmarks: number;
   firstName: string;
   lastName: string;
+  bookmarked: boolean;
+  liked: boolean;
 }
 
 interface Posts {
@@ -88,6 +90,34 @@ const Homepage: React.FC = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    fetch(`http://localhost:3000/bookmarks/user/${payload.id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${payload.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("DATA OF POSTSSSS", allPosts);
+        allPosts.map((post) => {
+          console.log(" DATA OF BOOKMARKS");
+          console.log(data);
+          console.log("POST ID", post._id);
+          data.map((bookmark: {user: string, list: string, id: string}) => {
+            if (post._id === bookmark.list) {
+              console.log("BOOKMARK ID", bookmark.list);
+              post.bookmarked = true;
+              setSavedPosts([...savedPosts, post]);
+            }
+          });
+        });
+        console.log("SAVED THREE");
+        console.log(savedPosts);
+      })
+      .catch((err) => console.log(err));
+  }, [allPosts]);
 
   
 
@@ -150,7 +180,7 @@ const Homepage: React.FC = () => {
               height: 64,
             }}
           />
-          <a href="./Homepage">
+          <a href="./Home">
             <img
               src="icon.ico"
               style={{ fontSize: "32px", width: 40, height: 40 }}
@@ -165,14 +195,14 @@ const Homepage: React.FC = () => {
         >
           {allPosts.map((post) => (
             <Post
-              key={post.id}
+              key={post._id}
               title={post.title}
               description={post.description}
               createdAt={post.createdAt}
               likes={post.likes}
               bookmarks={post.bookmarks}
               userId={post.userId}
-              id={post.id}
+              id={post._id}
               firstName={post.firstName}
               lastName={post.lastName}
               userImg="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2"
